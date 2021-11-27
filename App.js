@@ -5,7 +5,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import ProductsList from './screens/ProductsList';
 import ProductDetails from './screens/ProductDetails';
 import Cart from './screens/Cart';
-import {CartIcon} from './componenets/CartIcon';
+import {CartIcon} from './components/CartIcon';
 const Stack = createNativeStackNavigator();
 function App() {
   return (
