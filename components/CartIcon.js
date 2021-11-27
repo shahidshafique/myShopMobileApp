@@ -1,6 +1,8 @@
 import React, {useContext} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
+import {CartContext} from '../contexts/CartContext';
 export function CartIcon({navigation}) {
+  const {getItemsCount} = useContext(CartContext);
   return (
     <View style={styles.container}>
       <Text
@@ -8,7 +10,7 @@ export function CartIcon({navigation}) {
         onPress={() => {
           navigation.navigate('Cart');
         }}>
-        Cart(0)
+        Cart({getItemsCount()})
       </Text>
     </View>
   );
