@@ -47,6 +47,33 @@ export function CartProvider(props) {
     // console.log(id);
     setItems(items.filter(item => item.id !== id));
   }
+
+  // update item qty from cart
+  async function updateItemFromCart(id, qty) {
+    const product = await getProduct(id);
+    setItems(prevItems => {
+      const item = prevItems.find(item => item.id == id);
+      if (!item) {
+        return [
+          ...prevItems,
+          {
+            id,
+            qty: 1,
+            product,
+            totalPrice: product.price,
+          },
+        ];
+      } else {
+        return prevItems.map(item => {
+          if (item.id == id) {
+            item.qty = parseInt(qty);
+            item.totalPrice = product.price * qty;
+          }
+          return item;
+        });
+      }
+    });
+  }
   return (
     <CartContext.Provider
       value={{
@@ -56,6 +83,7 @@ export function CartProvider(props) {
         addItemToCart,
         getTotalPrice,
         deleteItemFromCart,
+        updateItemFromCart,
       }}>
       {props.children}
     </CartContext.Provider>

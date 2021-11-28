@@ -8,9 +8,11 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
+import {Picker} from '@react-native-picker/picker';
 import {CartContext} from '../contexts/CartContext';
 function Cart({navigation}) {
-  const {items, getTotalPrice, deleteItemFromCart} = useContext(CartContext);
+  const {items, getTotalPrice, deleteItemFromCart, updateItemFromCart} =
+    useContext(CartContext);
 
   const showConfirmDialog = id => {
     return Alert.alert(
@@ -50,6 +52,20 @@ function Cart({navigation}) {
           </TouchableOpacity>
         </View>
         <Text style={styles.lineRight}>£{item.totalPrice}</Text>
+
+        <Text>QTY</Text>
+        <Picker
+          selectedValue={item.qty.toString()}
+          onValueChange={(itemValue, itemIndex) =>
+            updateItemFromCart(item.id, itemValue)
+          }
+          style={{height: 50, width: 100}}>
+          <Picker.Item label="1" value="1" />
+          <Picker.Item label="2" value="2" />
+          <Picker.Item label="3" value="3" />
+          <Picker.Item label="4" value="5" />
+        </Picker>
+
         <Button
           onPress={() => showConfirmDialog(item.id)}
           title="Remove"
