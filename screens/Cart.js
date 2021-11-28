@@ -1,20 +1,60 @@
 import React, {useEffect, useState, useContext} from 'react';
-import {View, Text, FlatList, StyleSheet, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  Button,
+  FlatList,
+  StyleSheet,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
 import {CartContext} from '../contexts/CartContext';
 function Cart({navigation}) {
-  const {items, getTotalPrice} = useContext(CartContext);
+  const {items, getTotalPrice, deleteItemFromCart} = useContext(CartContext);
+
+  const showConfirmDialog = id => {
+    return Alert.alert(
+      'Are your sure?',
+      'Are you sure you want to remove Item From Cart?',
+      [
+        // The "Yes" button
+        {
+          text: 'Yes',
+          onPress: () => {
+            onDeleteItemFromCart(id);
+          },
+        },
+        // The "No" button
+        // Does nothing but dismiss the dialog when tapped
+        {
+          text: 'No',
+        },
+      ],
+    );
+  };
+  function onDeleteItemFromCart(id) {
+    deleteItemFromCart(id);
+  }
+
   function renderItem({item}) {
     return (
-      <View style={styles.cartLine}>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate('ProductDetails', {
-              productId: item.id,
-            });
-          }}>
-          <Text style={styles.lineLeft}>{item.product.name}</Text>
-        </TouchableOpacity>
+      <View>
+        <View style={styles.cartLine}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('ProductDetails', {
+                productId: item.id,
+              });
+            }}>
+            <Text style={styles.lineLeft}>{item.product.name}</Text>
+          </TouchableOpacity>
+        </View>
         <Text style={styles.lineRight}>£{item.totalPrice}</Text>
+        <Button
+          onPress={() => showConfirmDialog(item.id)}
+          title="Remove"
+          style={{}}
+        />
       </View>
     );
   }

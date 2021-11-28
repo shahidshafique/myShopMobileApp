@@ -42,7 +42,11 @@ export function CartProvider(props) {
   function getTotalPrice() {
     return items.reduce((sum, item) => sum + item.totalPrice, 0);
   }
-
+  // delete product from cart
+  function deleteItemFromCart(id) {
+    // console.log(id);
+    setItems(items.filter(item => item.id !== id));
+  }
   return (
     <CartContext.Provider
       value={{
@@ -51,6 +55,7 @@ export function CartProvider(props) {
         getItemsCount,
         addItemToCart,
         getTotalPrice,
+        deleteItemFromCart,
       }}>
       {props.children}
     </CartContext.Provider>
