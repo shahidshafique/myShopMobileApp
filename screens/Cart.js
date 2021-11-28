@@ -6,7 +6,14 @@ function Cart({navigation}) {
   function renderItem({item}) {
     return (
       <View style={styles.cartLine}>
-        <Text style={styles.lineLeft}>{item.product.name}</Text>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('ProductDetails', {
+              productId: item.id,
+            });
+          }}>
+          <Text style={styles.lineLeft}>{item.product.name}</Text>
+        </TouchableOpacity>
         <Text style={styles.lineRight}>£{item.totalPrice}</Text>
       </View>
     );
